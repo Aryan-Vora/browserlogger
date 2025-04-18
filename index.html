@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browser Logger</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <header>
+        <h1>Browser Logger</h1>
+        <p>Everything your browser reveals without permissions</p>
+    </header>
+
+    <main>
+        <section id="user-actions">
+            <h2>User Actions</h2>
+            <div class="grid-container">
+                <div class="card" id="text-selection">
+                    <h3>Text Selection</h3>
+                    <div class="data">Nothing selected</div>
+                </div>
+                <div class="card" id="mouse">
+                    <h3>Mouse Activity</h3>
+                    <div class="data">Position: X: 0, Y: 0</div>
+                    <div class="data">Last click: None</div>
+                </div>
+                <div class="card" id="keyboard">
+                    <h3>Keyboard Input</h3>
+                    <div class="data">Last key: None</div>
+                </div>
+                <div class="card" id="scroll">
+                    <h3>Scroll Position</h3>
+                    <div class="data">X: 0, Y: 0</div>
+                </div>
+                <div class="card" id="focus">
+                    <h3>Window Focus</h3>
+                    <div class="data">Currently focused</div>
+                </div>
+                <div class="card" id="time">
+                    <h3>Time on Page</h3>
+                    <div class="data">0 seconds</div>
+                </div>
+                <div class="card" id="resize">
+                    <h3>Window Resizing</h3>
+                    <div class="data">No resize events</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="device-info">
+            <h2>Browser and Device Info</h2>
+            <div class="grid-container">
+                <div class="card" id="browser">
+                    <h3>Browser</h3>
+                    <div class="data">Loading...</div>
+                </div>
+                <div class="card" id="os">
+                    <h3>Operating System</h3>
+                    <div class="data">Loading...</div>
+                </div>
+                <div class="card" id="screen">
+                    <h3>Screen & Viewport</h3>
+                    <div class="data">Loading...</div>
+                </div>
+                <div class="card" id="device">
+                    <h3>Device Type</h3>
+                    <div class="data">Loading...</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="network-info">
+            <h2>Network Info</h2>
+            <div class="grid-container">
+                <div class="card" id="ip">
+                    <h3>Public IP Address</h3>
+                    <div class="data">Loading...</div>
+                </div>
+                <div class="card" id="geolocation">
+                    <h3>Approximate Location</h3>
+                    <div class="data">Loading...</div>
+                </div>
+                <div class="card" id="network-type">
+                    <h3>Network Type</h3>
+                    <div class="data">Loading...</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="other-details">
+            <h2>Other Details</h2>
+            <div class="grid-container">
+                <div class="card" id="referrer">
+                    <h3>Referrer URL</h3>
+                    <div class="data">Loading...</div>
+                </div>
+                <div class="card" id="current-url">
+                    <h3>Current URL</h3>
+                    <div class="data">Loading...</div>
+                </div>
+                <div class="card" id="timezone">
+                    <h3>Timezone & Local Time</h3>
+                    <div class="data">Loading...</div>
+                </div>
+                <div class="card" id="language">
+                    <h3>Language Settings</h3>
+                    <div class="data">Loading...</div>
+                </div>
+                <div class="card" id="cookies">
+                    <h3>Cookies Enabled</h3>
+                    <div class="data">Loading...</div>
+                </div>
+                <div class="card" id="battery">
+                    <h3>Battery Status</h3>
+                    <div class="data">Loading...</div>
+                </div>
+                <div class="card" id="clipboard">
+                    <h3>Clipboard</h3>
+                    <div class="data">Try pasting something (Ctrl+V)</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>All data is collected using JavaScript and public APIs - No permissions required (I don't save this data
+            either)</p>
+    </footer>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
