@@ -6,6 +6,8 @@
   --text-color: #333333;
   --header-bg: #34495e;
   --header-text: #ecf0f1;
+  --log-bg: #f1f1f1;
+  --log-entry-bg: #ffffff;
 }
 
 * {
@@ -85,13 +87,83 @@ h3 {
   border-radius: 4px;
   min-height: 30px;
 }
-
+/* I should make this not repeat and repeat code */
+.data_logs {
+    font-family: monospace;
+    word-break: break-all;
+    margin-top: 1rem;
+}
 footer {
   text-align: center;
   margin-top: 2rem;
   padding: 1rem;
   background-color: var(--primary-color);
   color: var(--header-text);
+}
+
+.view-logs-btn {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+  transition: background-color 0.2s;
+}
+
+.view-logs-btn:hover {
+  background-color: #2980b9;
+}
+
+.all-logs {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 3px solid var(--accent-color);
+}
+
+.logs-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.log-section {
+  background-color: var(--log-bg);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.log-content {
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: var(--card-bg);
+  border-radius: 4px;
+  padding: 0.5rem;
+}
+
+.log-entry {
+  padding: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #ddd;
+  font-family: monospace;
+}
+
+.log-entry:last-child {
+  border-bottom: none;
+}
+
+.log-timestamp {
+  color: var(--accent-color);
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.log-empty {
+  font-style: italic;
+  color: #777;
+  padding: 10px;
 }
 
 @media (max-width: 768px) {

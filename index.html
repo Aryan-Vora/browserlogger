@@ -47,6 +47,12 @@
                     <h3>Window Resizing</h3>
                     <div class="data">No resize events</div>
                 </div>
+                <div class="card" id="view-logs" class="view-logs-card">
+                    <h3>View All Logs</h3>
+                    <div class="data_logs">
+                        <button id="view-logs-btn" class="view-logs-btn">View Detailed Activity Logs</button>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -120,6 +126,32 @@
                 <div class="card" id="clipboard">
                     <h3>Clipboard</h3>
                     <div class="data">Try pasting something (Ctrl+V)</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="all-logs" class="all-logs">
+            <h2>All Logs</h2>
+            <div class="logs-container">
+                <div class="log-section">
+                    <h3>Text Input Logs</h3>
+                    <div id="text-input-logs" class="log-content"></div>
+                </div>
+                <div class="log-section">
+                    <h3>Text Selection Logs</h3>
+                    <div id="text-selection-logs" class="log-content"></div>
+                </div>
+                <div class="log-section">
+                    <h3>Mouse Click Logs</h3>
+                    <div id="click-logs" class="log-content"></div>
+                </div>
+                <div class="log-section">
+                    <h3>Clipboard Paste Logs</h3>
+                    <div id="paste-logs" class="log-content"></div>
+                </div>
+                <div class="log-section">
+                    <h3>Window Focus Logs</h3>
+                    <div id="focus-logs" class="log-content"></div>
                 </div>
             </div>
         </section>

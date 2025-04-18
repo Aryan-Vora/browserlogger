@@ -34,6 +34,6 @@ It captures and displays:
 - Clipboard access attempt (only if user pastes)
 
 
-**Note:**  
+
 This project shows **only what can be captured without prompting**. No popups, no permission dialogs.  
 All data is collected using JavaScript and public APIs.

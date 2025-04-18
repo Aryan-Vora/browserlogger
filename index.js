@@ -1,5 +1,68 @@
 function initBrowserLogger() {
     const startTime = new Date();
+    const logs = {
+        textInput: [],
+        textSelection: [],
+        mouseClicks: [],
+        clipboardPastes: [],
+        windowFocus: []
+    };
+    
+    function getTimestamp() {
+        const now = new Date();
+        return now.toLocaleTimeString() + '.' + now.getMilliseconds().toString().padStart(3, '0');
+    }
+    
+    function addLogEntry(logType, content) {
+        if (logs[logType]) {
+            const timestamp = getTimestamp();
+            logs[logType].push({ timestamp, content });
+            updateLogDisplay(logType);
+        }
+    }
+    
+    function updateLogDisplay(logType) {
+        const logElementMap = {
+            textInput: 'text-input-logs',
+            textSelection: 'text-selection-logs',
+            mouseClicks: 'click-logs',
+            clipboardPastes: 'paste-logs',
+            windowFocus: 'focus-logs'
+        };
+        
+        const elementId = logElementMap[logType];
+        if (!elementId) return;
+        
+        const logContainer = document.getElementById(elementId);
+        if (!logContainer) return;
+        
+        if (logs[logType].length === 0) {
+            logContainer.innerHTML = '<div class="log-empty">No logs yet</div>';
+            return;
+        }
+        
+        let html = '';
+        logs[logType].slice().reverse().forEach(log => {
+            html += `<div class="log-entry">
+                <span class="log-timestamp">[${log.timestamp}]</span>
+                <span class="log-content">${log.content}</span>
+            </div>`;
+        });
+        
+        logContainer.innerHTML = html;
+    }
+    
+    function initLogDisplays() {
+        Object.keys(logs).forEach(logType => {
+            updateLogDisplay(logType);
+        });
+    }
+    
+    document.getElementById('view-logs-btn').addEventListener('click', () => {
+        document.getElementById('all-logs').scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
 
     // USER ACTIONS
     // text selection
@@ -7,6 +70,10 @@ function initBrowserLogger() {
         const selection = document.getSelection();
         const text = selection.toString();
         updateElement('text-selection', text ? `"${text}"` : 'Nothing selected');
+        
+        if (text) {
+            addLogEntry('textSelection', `Selected text: "${text}"`);
+        }
     });
 
     // mouse movement and clicks
@@ -17,11 +84,18 @@ function initBrowserLogger() {
     document.addEventListener('click', (e) => {
         const clickData = document.getElementById('mouse').querySelector('.data');
         clickData.innerHTML = `Position: X: ${e.clientX}, Y: ${e.clientY}<br>Last click: X: ${e.clientX}, Y: ${e.clientY}`;
+        
+        addLogEntry('mouseClicks', `Clicked at X: ${e.clientX}, Y: ${e.clientY} (Target: ${e.target.tagName.toLowerCase()}${e.target.id ? ' #' + e.target.id : ''})`);
     });
 
     // keyboard input
     document.addEventListener('keydown', (e) => {
         updateElement('keyboard', `Last key: ${e.key} (code: ${e.code})`);
+        
+        // Don't log modifier keys alone
+        if (!['Control', 'Shift', 'Alt', 'Meta'].includes(e.key)) {
+            addLogEntry('textInput', `Key pressed: ${e.key} (code: ${e.code})`);
+        }
     });
 
     // scroll position
@@ -34,10 +108,12 @@ function initBrowserLogger() {
     // window focus/blur
     window.addEventListener('focus', () => {
         updateElement('focus', 'Currently focused');
+        addLogEntry('windowFocus', 'Window gained focus');
     });
 
     window.addEventListener('blur', () => {
         updateElement('focus', 'Not focused (switched tabs)');
+        addLogEntry('windowFocus', 'Window lost focus (switched tabs)');
     });
 
     // time on page
@@ -54,7 +130,9 @@ function initBrowserLogger() {
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
-            updateElement('resize', `Window resized to: ${window.innerWidth}px × ${window.innerHeight}px`);
+            const dimensions = `${window.innerWidth}px × ${window.innerHeight}px`;
+            updateElement('resize', `Window resized to: ${dimensions}`);
+            addLogEntry('windowFocus', `Window resized to: ${dimensions}`);
         }, 500);
     });
 
@@ -209,11 +287,21 @@ function initBrowserLogger() {
         updateElement('battery', 'API not available');
     }
 
+    // Clipboard
     document.addEventListener('paste', (e) => {
         e.preventDefault();
         const text = e.clipboardData.getData('text/plain');
-        updateElement('clipboard', `Pasted: "${text.substring(0, 50)}${text.length > 50 ? '...' : ''}"`);
+        const displayText = text.substring(0, 50) + (text.length > 50 ? '...' : '');
+        updateElement('clipboard', `Pasted: "${displayText}"`);
+        
+        addLogEntry('clipboardPastes', `Pasted: "${displayText}"`);
     });
+    
+    // Initialize log displays
+    initLogDisplays();
+    
+    // Add initial window focus log
+    addLogEntry('windowFocus', 'Session started with window focused');
 }
 
 function updateElement(id, content) {
