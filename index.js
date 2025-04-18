@@ -65,7 +65,6 @@ function initBrowserLogger() {
     });
 
     // USER ACTIONS
-    // text selection
     document.addEventListener('selectionchange', () => {
         const selection = document.getSelection();
         const text = selection.toString();
@@ -76,7 +75,6 @@ function initBrowserLogger() {
         }
     });
 
-    // mouse movement and clicks
     document.addEventListener('mousemove', (e) => {
         updateElement('mouse', `Position: X: ${e.clientX}, Y: ${e.clientY}`);
     });
@@ -88,7 +86,6 @@ function initBrowserLogger() {
         addLogEntry('mouseClicks', `Clicked at X: ${e.clientX}, Y: ${e.clientY} (Target: ${e.target.tagName.toLowerCase()}${e.target.id ? ' #' + e.target.id : ''})`);
     });
 
-    // keyboard input
     document.addEventListener('keydown', (e) => {
         updateElement('keyboard', `Last key: ${e.key} (code: ${e.code})`);
         
@@ -98,14 +95,12 @@ function initBrowserLogger() {
         }
     });
 
-    // scroll position
     window.addEventListener('scroll', () => {
         const scrollX = window.scrollX || window.pageXOffset;
         const scrollY = window.scrollY || window.pageYOffset;
         updateElement('scroll', `X: ${scrollX}, Y: ${scrollY}`);
     });
 
-    // window focus/blur
     window.addEventListener('focus', () => {
         updateElement('focus', 'Currently focused');
         addLogEntry('windowFocus', 'Window gained focus');
@@ -116,7 +111,6 @@ function initBrowserLogger() {
         addLogEntry('windowFocus', 'Window lost focus (switched tabs)');
     });
 
-    // time on page
     timeOnPageInterval = setInterval(() => {
         const now = new Date();
         const timeSpent = Math.floor((now - startTime) / 1000);
@@ -125,7 +119,6 @@ function initBrowserLogger() {
         updateElement('time', `${minutes}m ${seconds}s`);
     }, 1000);
 
-    // window resizing
     let resizeTimeout;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimeout);
@@ -156,7 +149,7 @@ function initBrowserLogger() {
             browserName = "Internet Explorer";
         }
 
-        // version
+        // version (kinda sketchy)
         const match = userAgent.match(/(chrome|chromium|safari|firefox|msie|trident|edge(?=\/)|opr)(\/| )([0-9]+)/i);
         if (match && match[3]) {
             browserVersion = match[3];
@@ -213,36 +206,27 @@ function initBrowserLogger() {
     updateElement('device', detectDeviceType());
 
     // NETWORK INFO
-    //IP and location info
-    fetch('https://api.ipify.org?format=json')
-        .then(response => response.json())
-        .then(data => {
-            updateElement('ip', data.ip);
-            
-            // approximate location based on IP
-            return fetch(`https://ipapi.co/${data.ip}/json/`);
-        })
-        .then(response => response.json())
-        .then(data => {
-            updateElement('geolocation', `${data.city}, ${data.region}, ${data.country_name}`);
-        })
-        .catch(() => {
-            updateElement('ip', 'Could not retrieve');
-            updateElement('geolocation', 'Could not retrieve');
-        });
-
-    //  connection type
-    if (navigator.connection) {
-        const connection = navigator.connection;
-        updateElement('network-type', connection.effectiveType || 'Unknown');
-        
-        connection.addEventListener('change', () => {
-            updateElement('network-type', connection.effectiveType || 'Unknown');
-        });
-    } else {
-        updateElement('network-type', 'API not available');
-    }
-
+        fetch('http://ip-api.com/json/')
+            .then(response => response.json())
+            .then(data => {
+                updateElement('ip', data.query);
+                
+                updateElement('geolocation', `${data.city}, ${data.regionName}, ${data.country}`);
+                updateElement('zip-code', data.zip || 'Not available');
+                updateElement('location-coordinates', `Latitude: ${data.lat}\nLongitude: ${data.lon}`);
+                updateElement('isp', data.isp || 'Not available');
+                updateElement('organization', data.org || 'Not available');
+            })
+            .catch((err) => {
+                console.error('Error fetching IP/location data:', err);
+                updateElement('ip', 'Could not retrieve');
+                updateElement('geolocation', 'Could not retrieve');
+                updateElement('zip-code', 'Could not retrieve');
+                updateElement('location-coordinates', 'Could not retrieve');
+                updateElement('isp', 'Could not retrieve');
+                updateElement('organization', 'Could not retrieve');
+            });
+    
     // OTHER DETAILS
     updateElement('referrer', document.referrer || 'Direct navigation (no referrer)');
     updateElement('current-url', window.location.href);
@@ -287,7 +271,6 @@ function initBrowserLogger() {
         updateElement('battery', 'API not available');
     }
 
-    // Clipboard
     document.addEventListener('paste', (e) => {
         e.preventDefault();
         const text = e.clipboardData.getData('text/plain');
@@ -297,10 +280,7 @@ function initBrowserLogger() {
         addLogEntry('clipboardPastes', `Pasted: "${displayText}"`);
     });
     
-    // Initialize log displays
     initLogDisplays();
-    
-    // Add initial window focus log
     addLogEntry('windowFocus', 'Session started with window focused');
 }
 

@@ -117,12 +117,6 @@ footer {
   background-color: #2980b9;
 }
 
-.all-logs {
-  margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 3px solid var(--accent-color);
-}
-
 .logs-container {
   display: flex;
   flex-direction: column;
@@ -166,11 +160,38 @@ footer {
   padding: 10px;
 }
 
+#location-details .tabs {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.tab-btn {
+    padding: 5px 10px;
+    border: none;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    margin-right: 5px;
+    border-radius: 3px;
+}
+
+.tab-btn.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+#location-details {
+    grid-column: span 3;
+}
+
 @media (max-width: 768px) {
-  .grid-container {
-    grid-template-columns: 1fr;
-  }
-  
   header {
     padding: 1rem;
   }
