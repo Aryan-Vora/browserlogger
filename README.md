@@ -1,6 +1,6 @@
-# browserlogger
+# Browser Logger
 
-**browserlogger** is a website that shows everything a browser can reveal about the user **without any permissions**.
+This is a website that shows everything a browser can reveal about the user **without any permissions**.
 
 It captures and displays:
 
