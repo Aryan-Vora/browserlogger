@@ -7,7 +7,7 @@ It captures and displays:
 ## User Actions:
 - Text highlighting (selection)
 - Mouse movement and clicks
-- Key presses (key name, code)
+- Key presses (key name, code, time)
 - Scroll position and behavior
 - Window focus/blur (detect tab switching)
 - Time spent on page
@@ -20,9 +20,9 @@ It captures and displays:
 - Device type (mobile, desktop, tablet guess)
 
 ## Network Info:
-- Public IP address (via external IP lookup)
+- Public IP address
 - Approximate geolocation (via IP)
-- Network type (if available: wifi, 4g, etc.)
+- ISP (Internet Service Provider)
 
 ## Other Details:
 - Referrer URL (where the user came from)
@@ -32,7 +32,6 @@ It captures and displays:
 - Cookies enabled/disabled
 - Battery status (level, charging)
 - Clipboard access attempt (only if user pastes)
-
 
 
 This project shows **only what can be captured without prompting**. No popups, no permission dialogs.  
