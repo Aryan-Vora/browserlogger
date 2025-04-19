@@ -206,16 +206,18 @@ function initBrowserLogger() {
     updateElement('device', detectDeviceType());
 
     // NETWORK INFO
-        fetch('http://ip-api.com/json/')
+        fetch('https://ipapi.co/json/')
             .then(response => response.json())
             .then(data => {
-                updateElement('ip', data.query);
+                console.log('IP/location data:', data);
+                updateElement('ip', data.ip);
                 
-                updateElement('geolocation', `${data.city}, ${data.regionName}, ${data.country}`);
-                updateElement('zip-code', data.zip || 'Not available');
-                updateElement('location-coordinates', `Latitude: ${data.lat}\nLongitude: ${data.lon}`);
-                updateElement('isp', data.isp || 'Not available');
+                updateElement('geolocation', `${data.city}, ${data.region}, ${data.country_name}`);
+                updateElement('zip-code', data.postal || 'Not available');
+                updateElement('location-coordinates', `Latitude: ${data.latitude}\nLongitude: ${data.longitude}`);
+                updateElement('isp', data.asn || 'Not available');
                 updateElement('organization', data.org || 'Not available');
+                updateElement('version', data.version || 'Not available');
             })
             .catch((err) => {
                 console.error('Error fetching IP/location data:', err);
