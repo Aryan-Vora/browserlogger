@@ -209,7 +209,7 @@ function initBrowserLogger() {
         fetch('https://ipapi.co/json/')
             .then(response => response.json())
             .then(data => {
-                console.log('IP/location data:', data);
+                //console.log('IP/location data:', data);
                 updateElement('ip', data.ip);
                 
                 updateElement('geolocation', `${data.city}, ${data.region}, ${data.country_name}`);
