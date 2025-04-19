@@ -76,12 +76,12 @@ function initBrowserLogger() {
     });
 
     document.addEventListener('mousemove', (e) => {
-        updateElement('mouse', `Position: X: ${e.clientX}, Y: ${e.clientY}`);
+        document.getElementById('mouse-position').textContent = `Position: X: ${e.clientX}, Y: ${e.clientY}`;
     });
 
     document.addEventListener('click', (e) => {
-        const clickData = document.getElementById('mouse').querySelector('.data');
-        clickData.innerHTML = `Position: X: ${e.clientX}, Y: ${e.clientY}<br>Last click: X: ${e.clientX}, Y: ${e.clientY}`;
+        document.getElementById('mouse-position').textContent = `Position: X: ${e.clientX}, Y: ${e.clientY}`;
+        document.getElementById('mouse-click').textContent = `Last click: X: ${e.clientX}, Y: ${e.clientY}`;
         
         addLogEntry('mouseClicks', `Clicked at X: ${e.clientX}, Y: ${e.clientY} (Target: ${e.target.tagName.toLowerCase()}${e.target.id ? ' #' + e.target.id : ''})`);
     });
